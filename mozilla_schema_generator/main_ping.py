@@ -37,6 +37,12 @@ class MainPing(GenericPing):
             "type": "object",
             "additionalProperties": string,
         }
+        map_without_values = {
+            "type": "object",
+            "additionalProperties": {
+                "type": "object",
+            },
+        }
 
         active_addons = prepend_properties(("environment", "addons", "activeAddons")) \
             + ("additionalProperties", "properties")
@@ -48,6 +54,8 @@ class MainPing(GenericPing):
                 prepend_properties(("environment", "system", "os", "version")), string)
         schema.set_schema_elem(
                 prepend_properties(("environment", "addons", "theme", "foreignInstall")), integer)
+        schema.set_schema_elem(
+                prepend_properties(("payload", "addonDetails", "XPI")), map_without_values)
         schema.set_schema_elem(active_addons + ("foreignInstall",), integer)
         schema.set_schema_elem(active_addons + ("version",), string)
         schema.set_schema_elem(active_addons + ("userDisabled",), integer)
